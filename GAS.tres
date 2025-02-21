@@ -1,0 +1,15 @@
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://bsy7cmorqt6ob"]
+
+[ext_resource type="Texture2D" uid="uid://bo8blwb5mbysq" path="res://gasses.png" id="1_11xmo"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_quwny"]
+texture = ExtResource("1_11xmo")
+texture_region_size = Vector2i(48, 48)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[resource]
+tile_size = Vector2i(48, 48)
+sources/0 = SubResource("TileSetAtlasSource_quwny")
