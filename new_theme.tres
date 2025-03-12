@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3 uid="uid://calbj18dphlxj"]
+
+[resource]
+/colors/idk = Color(0.306923, 0.306923, 0.306923, 1)
+/constants/weed = 0
+/fonts/fart = null

@@ -4,11 +4,13 @@ class_name GameItem
 @export var volume:float
 @export var tags:Array =["can_pickup"]
 @export var tooltip:String = "thats it"
-@export var itemName:String
+@export var itemName:String =""
 @export var defaultTexture:Texture2D
+@export var equipSprite:Texture2D
+var mat
 var contained =false
 func get_actions(user:Dictionary):
-	var returns= ["pick up"]
+	var returns= []
 	var skills = user.get("skills")
 	var actions = user.get("actions")
 	var tools = user.get("tools")
@@ -16,27 +18,33 @@ func get_actions(user:Dictionary):
 	if (actions != null):
 		if actions.has("pick up"):
 			if tags.has("can_pickup"):
-				returns.append("pick up")
+				if contained:
+					returns.append("drop")
+				else:
+					returns.append("pick up")
+			if tags.has("harvestable"):
+				returns.append("harvest")
+			if tags.has("diggable"):
+				returns.append("dig")
+			if tags.has("edible"):
+				returns.append("eat")
+		if tags.has("container"):
+			returns.append("open")
+		if tags.has("equippable"):
+			if tags.has("worn"):
+				returns.append("unequip")
+			else:
+				returns.append("equip")
 		if actions.has("examine"):
 			if !tags.has("invisible"):
-				returns.append("examine")	
+				returns.append("examine")
+	print(returns)
 	return returns
 func tryAction(action,user):
-	match action:
-		"examine":
-			$"../CharacterBody2D/Camera2D/Control/TabContainer/Happenings/ScrollContainer/RichTextLabel".text +="\n"+ tooltip
-			pass
-		"pick up":
-			if(user.pickup(self)):
-				contained=true
-			pass
-		"drop":
-			if(user.drop(self)):
-				contained=false
-			pass
-	pass
-func examine(user):
-	return "\n"+tooltip
-func _ready():
-	$face.texture = defaultTexture
+	user.call(action.replace(" ",""),self)
 	
+func _ready():
+
+	$face.texture = defaultTexture
+func eat(item:GameItem):
+	pass

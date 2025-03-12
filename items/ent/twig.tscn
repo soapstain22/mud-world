@@ -1,0 +1,23 @@
+[gd_scene load_steps=4 format=3 uid="uid://los43ehb2lvs"]
+
+[ext_resource type="Script" path="res://GameItem.gd" id="1_4hi4d"]
+[ext_resource type="Texture2D" uid="uid://bl3wifc17rafu" path="res://spr/grasses.png" id="2_fyhvq"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ypew"]
+
+[node name="GameItem" type="Node2D"]
+script = ExtResource("1_4hi4d")
+
+[node name="face" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+texture = ExtResource("2_fyhvq")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("CircleShape2D_8ypew")
+debug_color = Color(0.528808, 0.413628, 1, 0.42)
