@@ -16,18 +16,21 @@ var items:PackedScene
 var sharp_stone:PackedScene
 var trucker_hat:PackedScene
 var beer:PackedScene
-
+var plants:Array
+var plants2Scene:Dictionary
 func _ready():
-	tree = preload("res://prop/tree.tscn")
-	brick = preload("res://prop/brick.tscn")
-	stone = preload("res://prop/stone.tscn")
-	sharp_stone = preload("res://prop/stone_flat.tscn")
-
 	baseturf = $game/baseturf
 	placed = $game/placed_walls
 	list = [0,0,0,0,0,0,0,0,0,0,0,0,0,0]
+	var g=preload("res://items/ent/mushroom.tscn").instantiate()
+	plants.append(g)
+	g=preload("res://items/ent/bamboo.tscn").instantiate()
+	plants.append(g)
+	g=preload("res://items/ent/yarrow.tscn").instantiate()
+	plants.append(g)
+	g=preload("res://items/ent/hemp.tscn").instantiate()
+	plants.append(g)
 	spawnworld()
-	print(list)
 func spawnworld():
 	for y in range(0,255):
 		for x in range(0,255):
@@ -41,34 +44,16 @@ func spawnworld():
 				placed.set_cell(Vector2i(x,y),1,Vector2i(1,1),0)
 				placed.set_cells_terrain_connect(a,0,0)
 			else:
-				if f>0.2:
-					var k =tree.instantiate()
-					k.global_position=(Vector2(x*48,y*48))
-					$game.add_child(k)
-					
-					var l = RandomNumberGenerator.new().randi_range(0,soil(cl,sa).distance_squared_to(Vector2i(7,0)))
-					print(l)
-					match l:
-						0:
-							var j =tree.instantiate()
-							j.global_position=(Vector2(x*48,y*48))
+				if f>0.1:
+					var j = foliageProcess(soil(cl,sa))
+				
+					if j!=null:
+						j = j.pick_random()
+						if j!=null:
+							j.global_position=(Vector2(randi_range(-16,-32)+x*48,randi_range(-16,-32)+y*48))
+							j=j.duplicate()
 							$game.add_child(j)
-							print("tree")
-						1:
-							var j =brick.instantiate()
-							j.global_position=(Vector2(x*48,y*48))
-							$game.add_child(j)
-							print("brick")
-						2:
-							var j =stone.instantiate()
-							j.global_position=(Vector2(x*48,y*48))
-							$game.add_child(j)
-							print("stone")
-						3:
-							var j =sharp_stone.instantiate()
-							j.global_position=(Vector2(x*48,y*48))
-							$game.add_child(j)
-							print("sharp_stone")
+							#var j =tree.instantiate()
 func soil(c,s):
 	c=abs(c)
 	c= c*10
@@ -77,7 +62,6 @@ func soil(c,s):
 	s= s*12
 	s= roundi(s)
 	var p = str(int(c)," ",int(s))
-
 	if range(6,11).has(c) && range(0,4).has(s):
 		return(Vector2i(0,0)) #hc x
 	else: if (range(4,6).has(c) && range(0,2).has(s)):
@@ -105,19 +89,22 @@ func soil(c,s):
 	else: if range(0,3).has(c) && range(0,4).has(s):
 		return(Vector2i(3,0)) #sil
 	else:
-		print(p)
 		return Vector2i(0,0)
 func foliageProcess(f:Vector2i):
 	var a = erosion.get_noise_2d(f.x,f.y)
 	var b = temperature.get_noise_2d(f.x,f.y)
 	var c = humidity.get_noise_2d(f.x,f.y)
-	match a:
-		0_:
-			print("b")
-			pass
-		1_:
-			print("a")
-			pass
+	var d = sand.get_noise_2d(f.x,f.y)
+	var e = clay.get_noise_2d(f.x,f.y)
+	var h = (d+e)/2
+	var k = plants.filter(func(poop):
+		if(poop.willsurvive(a,b,c,d,e,h)):
+			return true
+		else:
+			return false
+		)
+	return k
+
 	#temperature,humidity,erosion,sand,silt,clay
 	#mushroom
 	#hemp
@@ -127,4 +114,3 @@ func foliageProcess(f:Vector2i):
 	#yarrow
 	#dandelion
 	#chickweed
-	

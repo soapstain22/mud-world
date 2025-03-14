@@ -38,13 +38,8 @@ func get_actions(user:Dictionary):
 		if actions.has("examine"):
 			if !tags.has("invisible"):
 				returns.append("examine")
-	print(returns)
 	return returns
 func tryAction(action,user):
 	user.call(action.replace(" ",""),self)
-	
-func _ready():
-
-	$face.texture = defaultTexture
 func eat(item:GameItem):
 	pass

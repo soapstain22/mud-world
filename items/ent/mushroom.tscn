@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://8fdwfyw8sy3b"]
+[gd_scene load_steps=3 format=3 uid="uid://8fdwfyw8sy3b"]
 
 [ext_resource type="Script" path="res://Foliage.gd" id="1_l2gjn"]
+[ext_resource type="Texture2D" uid="uid://bipqf1x6nfcff" path="res://items/hardcode/dandellion.png" id="2_ywaxn"]
 
 [node name="Node2D" type="Node2D"]
 script = ExtResource("1_l2gjn")
+itemName = "dandellion"
+defaultTexture = ExtResource("2_ywaxn")

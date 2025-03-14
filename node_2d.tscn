@@ -1,4 +1,4 @@
-[gd_scene load_steps=79 format=4 uid="uid://cyf2m5wwd46n7"]
+[gd_scene load_steps=81 format=4 uid="uid://cyf2m5wwd46n7"]
 
 [ext_resource type="Script" path="res://worldgen.gd" id="1_fv3e0"]
 [ext_resource type="Script" path="res://playa.gd" id="2_jucig"]
@@ -41,6 +41,13 @@ domain_warp_frequency = 0.1
 seed = -4
 fractal_type = 3
 fractal_ping_pong_strength = 0.5
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hnwyy"]
+seed = -11
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ivww8"]
+seed = -4
+frequency = 0.0094
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_wugm2"]
 atlas = ExtResource("3_a3qqg")
@@ -673,26 +680,32 @@ tile_size = Vector2i(48, 48)
 sources/0 = SubResource("TileSetAtlasSource_6l2ou")
 
 [node name="Node2D" type="Node2D"]
+y_sort_enabled = true
 script = ExtResource("1_fv3e0")
 sand = SubResource("FastNoiseLite_03miq")
 clay = SubResource("FastNoiseLite_do152")
 solid = SubResource("FastNoiseLite_n4hkq")
 fert = SubResource("FastNoiseLite_fb2ml")
 erosion = SubResource("FastNoiseLite_6c5se")
+temperature = SubResource("FastNoiseLite_hnwyy")
+humidity = SubResource("FastNoiseLite_ivww8")
 
 [node name="game" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
 [node name="CharacterBody2D" type="CharacterBody2D" parent="game"]
 z_index = 9
+y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("2_jucig")
 
 [node name="pants" type="Sprite2D" parent="game/CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 texture = SubResource("AtlasTexture_wugm2")
 
 [node name="shirt" type="Sprite2D" parent="game/CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 texture = SubResource("AtlasTexture_y2ox7")
 
@@ -710,15 +723,18 @@ position = Vector2(0, 6)
 texture = ExtResource("5_u6le8")
 
 [node name="head" type="Sprite2D" parent="game/CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, -12)
 texture = SubResource("AtlasTexture_kpxih")
 
 [node name="helmet" type="Sprite2D" parent="game/CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, -12)
 
 [node name="mask" type="Sprite2D" parent="game/CharacterBody2D"]
+y_sort_enabled = true
 texture_filter = 1
 position = Vector2(0, -12)
 
@@ -755,7 +771,8 @@ tile_set = SubResource("TileSet_jmuw6")
 [node name="RayCast2D" type="RayCast2D" parent="game/placed_walls"]
 
 [node name="baseturf" type="TileMapLayer" parent="game"]
-z_index = -1
+z_index = -393
+y_sort_enabled = true
 texture_filter = 1
 tile_set = ExtResource("3_2e4ck")
 
@@ -767,6 +784,7 @@ texture_filter = 1
 [node name="pipes" type="TileMapLayer" parent="game/baseturf"]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="game/baseturf"]
+visible = false
 visibility_layer = 0
 color = Color(0, 0, 0, 1)
 script = ExtResource("8_hb34s")
@@ -792,6 +810,7 @@ tile_set = ExtResource("7_4ocxr")
 [node name="Node2D" type="Node2D" parent="game/baseturf"]
 
 [node name="StaticBody2D" parent="game" instance=ExtResource("9_2sjg8")]
+y_sort_enabled = true
 position = Vector2(64, 114)
 
 [node name="GameItem2" parent="game" instance=ExtResource("10_6qs8f")]

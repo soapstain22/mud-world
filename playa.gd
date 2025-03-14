@@ -123,7 +123,6 @@ func equip(equipment:GameItem):
 			equipment.contained=true
 			var g = item2menuButton.get(equipment)
 			if g!=null:
-				var l = item2menuButton.get(g)
 				$"../../hud/Control/Equip/ScrollContainer/VBoxContainer".remove_child(g)
 			propagateSlot($"../../hud/Control/equipment/helm/MenuButton",equipment,actions)
 	update_equipment()
@@ -190,14 +189,14 @@ func propagateSlot(panel: MenuButton, item: GameItem,user:Dictionary):
 	var dict:Dictionary
 	var c = 0
 	var acts:Array
-	print("that")
 	for o in item.get_actions(actions):
-		print("this")
+		print("MROW")
 		acts.append(o)
 		panel.get_popup().add_item(o)
-		panel.get_popup().index_pressed.connect(func(index:int):
-			item.tryAction(acts[index],self)
-			)
+	panel.get_popup().index_pressed.connect(func(index:int):
+		item.tryAction(acts[index],self)
+		)
+		
 	return panel
 func holdinhands(item:GameItem):
 	pass	

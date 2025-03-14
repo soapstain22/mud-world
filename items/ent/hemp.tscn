@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://bhsq011em46pm"]
+
+[ext_resource type="Script" path="res://Foliage.gd" id="1_v8vcv"]
+[ext_resource type="Texture2D" uid="uid://dpsaxd4wknirp" path="res://items/hardcode/hemp.png" id="2_e3ide"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8ypew"]
+radius = 6.32456
+
+[node name="hemp" type="Node2D"]
+script = ExtResource("1_v8vcv")
+preferredTemp = 0.06
+preferredHumidity = 0.31
+preferredErosion = 0.01
+preferredSand = 0.37
+preferredClay = 0.36
+preferredSilt = 0.22
+pickiness = 0.1
+tooltip = "hemp"
+itemName = "hemp"
+defaultTexture = ExtResource("2_e3ide")
+
+[node name="face" type="Sprite2D" parent="."]
+texture_filter = 1
+texture_repeat = 1
+texture = ExtResource("2_e3ide")
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+collision_layer = 2
+collision_mask = 0
+gravity_scale = 0.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_8ypew")
+debug_color = Color(0.528808, 0.413628, 1, 0.42)

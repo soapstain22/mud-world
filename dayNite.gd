@@ -7,9 +7,5 @@ func _ready():
 func _process(delta):
 	time += delta
 	#self.color = c.sample(time)
-	
-
-
-
 
 	return 
