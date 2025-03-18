@@ -7,6 +7,8 @@ class_name GameItem
 @export var itemName:String =""
 @export var defaultTexture:Texture2D
 @export var equipSprite:Texture2D
+@export var clickCatch:Callable
+@export var clickThrow:Callable
 var mat
 var contained =false
 func get_actions(user:Dictionary):
@@ -20,8 +22,12 @@ func get_actions(user:Dictionary):
 			if tags.has("can_pickup"):
 				if contained:
 					returns.append("drop")
+					returns.append("put away")
+
 				else:
-					returns.append("pick up")
+					returns.append("put in hands")
+
+					
 			if tags.has("harvestable"):
 				returns.append("harvest")
 			if tags.has("diggable"):

@@ -26,6 +26,9 @@ var item2menuButton:Dictionary
 var rotationMatrix:Array
 var rotation_anchor:Node2D
 var armor2item:Dictionary
+var activeHand
+var leftHandSlot:MenuButton
+var RightHandSlot:MenuButton
 var chat
 func get_input():
 	velocity = 200*Vector2(Input.get_axis("left", "right"),Input.get_axis("up", "down"))
@@ -69,7 +72,7 @@ func _on_area_2d_body_shape_exited(body_rid, body, body_shape_index, local_shape
 		nearby.erase(body.get_parent())
 	pass # Replace with function body.
 func _ready():
-	
+	activeHand="left"
 	lister = $"../../hud/Control/listedThings"
 	lister.create_item(null, -1)
 	lister.hide_root = true
@@ -80,6 +83,8 @@ func _ready():
 	rotationMatrix.append([3,2,1])
 	rotation_anchor=$shirt/rotation_anchor
 	chat = $"../../hud/Control/Happenings/ScrollContainer/RichTextLabel"
+	RightHandSlot = $"../../hud/Control/equipment/right/MenuButton"
+	leftHandSlot = $"../../hud/Control/equipment/left/MenuButton"
 func _on_listed_things_item_activated():
 	var c = lister.get_selected()
 	if tree2action.has(c):
@@ -184,6 +189,11 @@ func update_equipment():
 		$"../../hud/Control/equipment/coat/MenuButton".icon=coat.defaultTexture
 	if hands!=null:
 		$"../../hud/Control/equipment/hands/MenuButton".icon=hands.defaultTexture
+	if leftHand!=null:
+		$"../../hud/Control/equipment/left/MenuButton".icon=leftHand.defaultTexture
+		$shirt/rotation_anchor/hand_l.texture=leftHand.defaultTexture
+	else:
+		$"../../hud/Control/equipment/left/MenuButton".icon=null
 func propagateSlot(panel: MenuButton, item: GameItem,user:Dictionary):
 	panel.get_popup().clear(true)
 	var dict:Dictionary
@@ -198,7 +208,27 @@ func propagateSlot(panel: MenuButton, item: GameItem,user:Dictionary):
 		)
 		
 	return panel
-func holdinhands(item:GameItem):
+func putinhands(item:GameItem):
+	item.reparent(invNode)
+	if activeHand=="left":
+		if leftHand == null:
+			leftHand=item
+			$shirt/rotation_anchor/hand_l.texture = leftHand.defaultTexture
+			item2menuButton.get_or_add(item,leftHand)
+			item.contained=true
+			propagateSlot(leftHandSlot,item,actions)
+			pass
+	update_equipment()
+	pass	
+func putaway(item:GameItem):
+	item.reparent(invNode)
+	inventory.append(item)
+	if activeHand=="left":
+		if leftHand == null:
+			leftHand=item
+			propagateSlot(leftHandSlot,item,actions)
+			pass
+	update_equipment()
 	pass	
 func examine(item:GameItem):
 	if item.itemName:

@@ -784,7 +784,6 @@ texture_filter = 1
 [node name="pipes" type="TileMapLayer" parent="game/baseturf"]
 
 [node name="CanvasModulate" type="CanvasModulate" parent="game/baseturf"]
-visible = false
 visibility_layer = 0
 color = Color(0, 0, 0, 1)
 script = ExtResource("8_hb34s")
@@ -1052,21 +1051,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="right" type="Panel" parent="hud/Control/equipment"]
-layout_mode = 0
-offset_left = 299.0
-offset_top = 4.0
-offset_right = 355.0
-offset_bottom = 60.0
-
-[node name="MenuButton" type="MenuButton" parent="hud/Control/equipment/right"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
 [node name="mask" type="Panel" parent="hud/Control/equipment"]
 layout_mode = 0
 offset_left = 5.0
@@ -1137,6 +1121,21 @@ offset_right = 293.0
 offset_bottom = 118.0
 
 [node name="MenuButton" type="MenuButton" parent="hud/Control/equipment/socks"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="right" type="Panel" parent="hud/Control/equipment"]
+layout_mode = 0
+offset_left = 299.0
+offset_top = 4.0
+offset_right = 355.0
+offset_bottom = 60.0
+
+[node name="MenuButton" type="MenuButton" parent="hud/Control/equipment/right"]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
