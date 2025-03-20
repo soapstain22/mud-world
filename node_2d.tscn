@@ -967,7 +967,10 @@ offset_right = 358.0
 offset_bottom = 341.0
 
 [node name="VBoxContainer" type="VBoxContainer" parent="hud/Control/Equip/ScrollContainer"]
+custom_minimum_size = Vector2(10, 10)
 layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 
 [node name="equipment" type="Panel" parent="hud/Control"]
 layout_mode = 0

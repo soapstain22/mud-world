@@ -42,7 +42,7 @@ func spawnworld():
 			if(solid.get_noise_2d(x,y)>0.3):
 				var a = [Vector2i(x+1,y),Vector2i(x,y+1),Vector2i(x-1,y),Vector2i(x,y-1)]
 				placed.set_cell(Vector2i(x,y),1,Vector2i(1,1),0)
-				placed.set_cells_terrain_connect(a,0,0)
+#				placed.set_cells_terrain_connect(a,0,0)
 			else:
 				if f>0.1:
 					var j = foliageProcess(soil(cl,sa))

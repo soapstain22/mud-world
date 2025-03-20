@@ -1,3 +1,8 @@
+VBoxContainer
+ItemList
+Tree
+TabBar
+Foliage
 MenuButton
 Label
 Button
@@ -8,7 +13,3 @@ Node
 SubViewportContainer
 SubViewport
 Panel
-ItemList
-GridContainer
-Sprite2D
-PanelContainer

@@ -11,23 +11,25 @@ class_name GameItem
 @export var clickThrow:Callable
 var mat
 var contained =false
-func get_actions(user:Dictionary):
+var inhand =false
+
+func get_actions(actions:Dictionary):
 	var returns= []
-	var skills = user.get("skills")
-	var actions = user.get("actions")
-	var tools = user.get("tools")
-	var items = user.get("items")
-	if (actions != null):
-		if actions.has("pick up"):
+	var skills = actions.get("skills")
+	var acts = actions.get("actions")
+	var tools = actions.get("tools")
+	var items = actions.get("items")
+	if (acts != null):
+		if acts.has("pick up"):
 			if tags.has("can_pickup"):
 				if contained:
-					returns.append("drop")
-					returns.append("put away")
+					if inhand:
+						returns.append("store")
+					else:
+						returns.append("hold")
 
 				else:
-					returns.append("put in hands")
-
-					
+					returns.append("pick up")
 			if tags.has("harvestable"):
 				returns.append("harvest")
 			if tags.has("diggable"):
@@ -36,12 +38,12 @@ func get_actions(user:Dictionary):
 				returns.append("eat")
 		if tags.has("container"):
 			returns.append("open")
-		if tags.has("equippable"):
+		if ["helm","back","shirt","pants","shoes","hand","coat","mask","socks","underwear"] in tags:
 			if tags.has("worn"):
 				returns.append("unequip")
 			else:
 				returns.append("equip")
-		if actions.has("examine"):
+		if acts.has("examine"):
 			if !tags.has("invisible"):
 				returns.append("examine")
 	return returns

@@ -1,17 +1,7 @@
 extends CharacterBody2D
 @export var speed = 1000
 @export var rotation_speed = 1.5
-@export var helmet:GameItem
-@export var shirt:GameItem
-@export var pants:GameItem
-@export var back:GameItem
-@export var gloves:GameItem
-@export var mask:GameItem
-@export var coat:GameItem
-@export var hands:GameItem
-@export var shoes:GameItem
-@export var rightHand:GameItem
-@export var leftHand:GameItem
+@export var equipment:Dictionary
 var string2itemSlot:Dictionary
 var lister:Tree
 var inrange:Array
@@ -30,6 +20,8 @@ var activeHand
 var leftHandSlot:MenuButton
 var RightHandSlot:MenuButton
 var chat
+var invShow:VBoxContainer
+var validEquipSlots=["helm","back","shirt","socks","pants","shoes","mask","coat","hands","underwear"]
 func get_input():
 	velocity = 200*Vector2(Input.get_axis("left", "right"),Input.get_axis("up", "down"))
 	if (Input.get_action_strength("ui_accept")):
@@ -72,6 +64,7 @@ func _on_area_2d_body_shape_exited(body_rid, body, body_shape_index, local_shape
 		nearby.erase(body.get_parent())
 	pass # Replace with function body.
 func _ready():
+	invShow=$"../../hud/Control/Equip/ScrollContainer/VBoxContainer"
 	activeHand="left"
 	lister = $"../../hud/Control/listedThings"
 	lister.create_item(null, -1)
@@ -91,145 +84,63 @@ func _on_listed_things_item_activated():
 		tree2item.get(c).tryAction(tree2action.get(c),self)
 	pass # Replace with function body.
 func pickup(item:GameItem):
-	if (!inventory.has(item)):
-		if (inventory.size() < 21):
+	if equipment.get(activeHand)==null:
+		item.reparent(invNode)
+		equipment.get_or_add(activeHand,item)
+		item.contained=true
+		item.inhand=true
+		if !inventory.has(item):
 			inventory.append(item)
-			item.contained=true
-			item.reparent(invNode)
-			var v := MenuButton.new()
-			item2menuButton.get_or_add(item,v)
-			v.text=item.name
-			v.icon=item.defaultTexture
-			$"../../hud/Control/Equip/ScrollContainer/VBoxContainer".add_child(propagateSlot(v,item,actions))
-			var acts:Array
+		clearMenuButtonViaItem(item)
+		propagateMenuButtonViaItem($"../../hud/Control/equipment".find_child(activeHand).get_child(0),item,actions)
+	else:
+		print("tried pickup with full hand")
 
-			return true
-	return false
-func drop(c):
-	var j = item2menuButton.get(c)
-	item2menuButton.erase(c)
-	if (j!=null):
-		j.free()
-	c.global_position = global_position
-	c.visible=true
-	c.reparent($"../..")
-	c.contained=false
-	unequip(c)
-	inventory.erase(c)
-
-func equip(equipment:GameItem):
-	equipment.reparent(invNode)
-	var a:Array= equipment.get_actions(self.actions)
-	#bigass if tree because you wont be doing this all the time hopefully
-	if a.has("equip"):
-		if equipment.tags.has("hat"):
-			helmet = equipment
-			equipment.tags.append("worn")
-			equipment.contained=true
-			var g = item2menuButton.get(equipment)
-			if g!=null:
-				$"../../hud/Control/Equip/ScrollContainer/VBoxContainer".remove_child(g)
-			propagateSlot($"../../hud/Control/equipment/helm/MenuButton",equipment,actions)
-	update_equipment()
+	#update_equipment()
+func drop():
+	var v = equipment.get(activeHand) as GameItem
+	if v !=null:
+		v.reparent($"../..")
+		v.contained=false
+		v.inhand=false
+		inventory.erase(v)
+		equipment.erase(v)
+		clearMenuButtonViaItem(v)
 	pass
-func unequip(equipment:GameItem):
-	equipment.tags.erase("worn")
-	if helmet==equipment:
-		pickup(equipment)	
-		helmet = null
-	else:if back==equipment:
-		pickup(equipment)
-		back = null
-	else:if shirt==equipment:
-		pickup(equipment)
-		shirt = null
-	else:if pants==equipment:
-		pickup(equipment)
-		pants = null
-	else:if shoes==equipment:
-		pickup(equipment)
-		shoes = null
-	else:if mask==equipment:
-		pickup(equipment)
-		mask= null
-	else:if coat==equipment:
-		pickup(equipment)
-		coat= null
-	else:if hands==equipment:
-		pickup(equipment)
-		hands=null
-	update_equipment()
+func equip(item:GameItem):
+	var a = item.tags.filter(func(a):validEquipSlots.has(a))
+	var b = 	equipment.get(a[0])
+	if b!=null:
+		equipment.get_or_add(a[0],item)
+		clearMenuButtonViaItem(item)
+		propagateMenuButtonViaItem($"../../hud/Control/equipment".find_child(a[0]).get_child(0),item,actions)
+		update_equipment()
 	pass
-
-	
+func unequip(item:GameItem):
+	pass
+func store(a):
+	var item = equipment.get(activeHand)
+	if equipment.get(activeHand) !=null:
+		item.contained=true
+		item.inhand=false
+		clearMenuButtonViaItem(item)
+		invShow.add_child(propagateMenuButtonViaItem(MenuButton.new(),item,actions)) 
+		equipment.erase(activeHand)
+	pass
+func hold(item:GameItem):
+	pickup(item)
+	pass	
 func update_equipment():
-	if helmet!=null:	
-		$"../../hud/Control/equipment/helm/MenuButton".icon=helmet.defaultTexture
-	else:
-		$"../../hud/Control/equipment/helm/MenuButton".icon=null
-	if back!=null:
-		$"../../hud/Control/equipment/back/MenuButton".icon=back.defaultTexture
-	else:
-		$"../../hud/Control/equipment/back/MenuButton".icon=null
-	if shirt!=null:
-		$"../../hud/Control/equipment/shirt/MenuButton".icon=shirt.defaultTexture
-	else:
-		$"../../hud/Control/equipment/shirt/MenuButton".icon=null
-	if pants!=null:
-		$"../../hud/Control/equipment/pants/MenuButton".icon=pants.defaultTexture
-	else:
-		$"../../hud/Control/equipment/pants/MenuButton".icon=null
-	if shoes!=null:
-		$"../../hud/Control/equipment/shoes/MenuButton".icon=shoes.defaultTexture
-	else:
-		$"../../hud/Control/equipment/shoes/MenuButton".icon=null
-	if mask!=null:
-		$"../../hud/Control/equipment/mask/MenuButton".icon=mask.defaultTexture
-	if coat!=null:
-		$"../../hud/Control/equipment/coat/MenuButton".icon=coat.defaultTexture
-	if hands!=null:
-		$"../../hud/Control/equipment/hands/MenuButton".icon=hands.defaultTexture
-	if leftHand!=null:
-		$"../../hud/Control/equipment/left/MenuButton".icon=leftHand.defaultTexture
-		$shirt/rotation_anchor/hand_l.texture=leftHand.defaultTexture
-	else:
-		$"../../hud/Control/equipment/left/MenuButton".icon=null
-func propagateSlot(panel: MenuButton, item: GameItem,user:Dictionary):
-	panel.get_popup().clear(true)
-	var dict:Dictionary
-	var c = 0
-	var acts:Array
-	for o in item.get_actions(actions):
-		print("MROW")
-		acts.append(o)
-		panel.get_popup().add_item(o)
-	panel.get_popup().index_pressed.connect(func(index:int):
-		item.tryAction(acts[index],self)
-		)
-		
-	return panel
-func putinhands(item:GameItem):
-	item.reparent(invNode)
-	if activeHand=="left":
-		if leftHand == null:
-			leftHand=item
-			$shirt/rotation_anchor/hand_l.texture = leftHand.defaultTexture
-			item2menuButton.get_or_add(item,leftHand)
-			item.contained=true
-			propagateSlot(leftHandSlot,item,actions)
-			pass
-	update_equipment()
-	pass	
-func putaway(item:GameItem):
-	item.reparent(invNode)
-	inventory.append(item)
-	if activeHand=="left":
-		if leftHand == null:
-			leftHand=item
-			propagateSlot(leftHandSlot,item,actions)
-			pass
-	update_equipment()
-	pass	
+	pass
+func propagateInventory():
+	$"../../hud/Control/Equip/ScrollContainer/Inventor".get_children().all(func(a):a.free())
+	for i in inventory:
+		var a = MenuButton.new()
+		a=propagateMenuButtonViaItem(a,i,actions)
+		a.text = i.name
+		#a.icon = i.default_texture
+		$"../../hud/Control/Equip/ScrollContainer/Inventor".add_child(a)
+	pass
 func examine(item:GameItem):
 	if item.itemName:
 		chat.add_text("\n"+item.itemName)
@@ -237,3 +148,37 @@ func examine(item:GameItem):
 		chat.add_image(item.defaultTexture)
 	if item.tooltip:
 		chat.add_text("\n"+item.tooltip)
+func clearMenuButtonViaItem(item:GameItem):
+	print("clearing ",item)
+	if item2menuButton.get(item) !=null:
+		var poop:MenuButton = item2menuButton.get(item) as MenuButton
+		poop.get_popup().clear()
+		poop.icon=null
+		poop.text=""
+		if item2menuButton.get(item).get_parent() == invShow:
+			item2menuButton.get(item).free()
+			item2menuButton.erase(item)
+			pass
+		item2menuButton.erase(item)
+		
+func propagateMenuButtonViaItem(panel: MenuButton, item: GameItem,user:Dictionary):
+	item2menuButton.get_or_add(item,panel)
+	if panel == null:
+		return null
+	panel.get_popup().clear(true)
+	var dict:Dictionary
+	var c = 0
+	var acts:Array
+	panel.icon=item.defaultTexture
+	panel.text=item.name
+	acts = item.get_actions(actions)
+	panel.get_popup().index_pressed.connect(func(index:int):
+		print(index)
+		item.tryAction(acts[index],self)
+		)
+	for o in item.get_actions(actions):
+		panel.get_popup().add_item(o)
+	
+	return panel
+func canFitInInventory(item:GameItem):
+	pass

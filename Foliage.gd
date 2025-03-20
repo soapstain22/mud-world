@@ -9,5 +9,6 @@ class_name Foliage
 @export var pickiness:float
 func willsurvive(temp,humid,ero,sand,clay,silt):
 	if pickiness > Vector3(temp,humid,ero).distance_squared_to(Vector3(preferredTemp,preferredHumidity,preferredErosion)) && pickiness < Vector3(sand,clay,silt).distance_squared_to(Vector3(preferredSand,preferredClay,preferredSilt)):
+		print(pickiness)
 		return true
 	return false
