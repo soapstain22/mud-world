@@ -21,6 +21,7 @@ var leftHandSlot:MenuButton
 var RightHandSlot:MenuButton
 var chat
 var invShow:VBoxContainer
+@export var recipes:Array
 var validEquipSlots=["helm","back","shirt","socks","pants","shoes","mask","coat","hands","underwear"]
 func get_input():
 	velocity = 200*Vector2(Input.get_axis("left", "right"),Input.get_axis("up", "down"))
@@ -76,8 +77,6 @@ func _ready():
 	rotationMatrix.append([3,2,1])
 	rotation_anchor=$shirt/rotation_anchor
 	chat = $"../../hud/Control/Happenings/ScrollContainer/RichTextLabel"
-	RightHandSlot = $"../../hud/Control/equipment/right/MenuButton"
-	leftHandSlot = $"../../hud/Control/equipment/left/MenuButton"
 func _on_listed_things_item_activated():
 	var c = lister.get_selected()
 	if tree2action.has(c):
@@ -104,7 +103,7 @@ func drop():
 		v.contained=false
 		v.inhand=false
 		inventory.erase(v)
-		equipment.erase(v)
+		equipment.erase(activeHand)
 		clearMenuButtonViaItem(v)
 	pass
 func equip(item:GameItem):
@@ -172,13 +171,27 @@ func propagateMenuButtonViaItem(panel: MenuButton, item: GameItem,user:Dictionar
 	panel.icon=item.defaultTexture
 	panel.text=item.name
 	acts = item.get_actions(actions)
+	print('l')
 	panel.get_popup().index_pressed.connect(func(index:int):
 		print(index)
 		item.tryAction(acts[index],self)
 		)
 	for o in item.get_actions(actions):
 		panel.get_popup().add_item(o)
-	
+	#fixme inventory overstore or repeating action thing
 	return panel
 func canFitInInventory(item:GameItem):
 	pass
+func getCrafting():
+	pass
+func resippyBS():
+	var v = Recipe.new()
+	#spear
+	#string
+	#rope
+	#tinder
+	#pot
+	#crucible
+	v.catalysts.append("bow")
+	v.consumed.append(["stick","log","wood"])
+	recipes.append(v)

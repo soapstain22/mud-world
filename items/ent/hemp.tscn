@@ -8,13 +8,13 @@ radius = 6.32456
 
 [node name="Hemp" type="Node2D"]
 script = ExtResource("1_v8vcv")
-preferredTemp = 0.06
-preferredHumidity = 0.31
+preferredTemp = 0.01
+preferredHumidity = 0.01
 preferredErosion = 0.01
-preferredSand = 0.37
-preferredClay = 0.36
-preferredSilt = 0.22
-pickiness = 0.1
+preferredSand = 0.01
+preferredClay = 0.01
+preferredSilt = 0.01
+pickiness = 5.0
 tooltip = "hemp"
 itemName = "hemp"
 defaultTexture = ExtResource("2_e3ide")

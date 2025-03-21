@@ -698,6 +698,7 @@ z_index = 9
 y_sort_enabled = true
 motion_mode = 1
 script = ExtResource("2_jucig")
+recipes = [null]
 
 [node name="pants" type="Sprite2D" parent="game/CharacterBody2D"]
 y_sort_enabled = true

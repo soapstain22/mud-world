@@ -7,12 +7,6 @@
 
 [node name="Grass" type="Node2D"]
 script = ExtResource("1_64p0l")
-preferredTemp = 0.12
-preferredHumidity = 0.46
-preferredErosion = -0.12
-preferredSand = -0.03
-preferredClay = 0.13
-preferredSilt = 0.29
 pickiness = -0.09
 itemName = "Grass"
 

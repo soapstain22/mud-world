@@ -8,13 +8,12 @@ radius = 6.32456
 
 [node name="yarrow" type="Node2D"]
 script = ExtResource("1_bl3jw")
-preferredTemp = 0.1
-preferredHumidity = 0.3
-preferredErosion = 0.2
-preferredSand = 0.2
-preferredClay = 0.1
-preferredSilt = 0.1
-pickiness = 0.24
+preferredTemp = 0.01
+preferredHumidity = 0.01
+preferredErosion = 0.01
+preferredSand = 0.05
+preferredClay = 0.05
+preferredSilt = 0.01
 weight = 0.05
 tooltip = "yearrrarwewow"
 itemName = "Yarrow"

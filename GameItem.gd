@@ -46,6 +46,7 @@ func get_actions(actions:Dictionary):
 		if acts.has("examine"):
 			if !tags.has("invisible"):
 				returns.append("examine")
+	print(returns)
 	return returns
 func tryAction(action,user):
 	user.call(action.replace(" ",""),self)

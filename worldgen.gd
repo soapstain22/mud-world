@@ -44,7 +44,7 @@ func spawnworld():
 				placed.set_cell(Vector2i(x,y),1,Vector2i(1,1),0)
 #				placed.set_cells_terrain_connect(a,0,0)
 			else:
-				if f>0.1:
+				if f>0:
 					var j = foliageProcess(soil(cl,sa))
 				
 					if j!=null:

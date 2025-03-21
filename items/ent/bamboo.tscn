@@ -8,13 +8,8 @@ radius = 6.32456
 
 [node name="Bamboo" type="Node2D"]
 script = ExtResource("1_s72h1")
-preferredTemp = 0.18
-preferredHumidity = 0.4
-preferredErosion = -0.01
-preferredSand = 0.23
-preferredClay = 0.4
-preferredSilt = 0.3
-pickiness = 0.3
+preferredClay = 0.1
+pickiness = 10.0
 tooltip = "bambooooo"
 itemName = "bamboo"
 defaultTexture = ExtResource("2_fea1d")
