@@ -90,6 +90,9 @@ func pickup(item:GameItem):
 		item.inhand=true
 		if !inventory.has(item):
 			inventory.append(item)
+		if item.toolBehavior !=null:
+			for i in item.toolBehavior:
+				actions.get_or_add(i)
 		clearMenuButtonViaItem(item)
 		propagateMenuButtonViaItem($"../../hud/Control/equipment".find_child(activeHand).get_child(0),item,actions)
 	else:
@@ -102,10 +105,14 @@ func drop():
 		v.reparent($"../..")
 		v.contained=false
 		v.inhand=false
+		if v.toolBehavior !=null: 
+			for i in v.toolBehavior:
+				actions.erase(i)
 		inventory.erase(v)
 		equipment.erase(activeHand)
 		clearMenuButtonViaItem(v)
 	pass
+
 func equip(item:GameItem):
 	var a = item.tags.filter(func(a):validEquipSlots.has(a))
 	var b = 	equipment.get(a[0])
@@ -159,7 +166,6 @@ func clearMenuButtonViaItem(item:GameItem):
 			item2menuButton.erase(item)
 			pass
 		item2menuButton.erase(item)
-		
 func propagateMenuButtonViaItem(panel: MenuButton, item: GameItem,user:Dictionary):
 	item2menuButton.get_or_add(item,panel)
 	if panel == null:
@@ -171,7 +177,7 @@ func propagateMenuButtonViaItem(panel: MenuButton, item: GameItem,user:Dictionar
 	panel.icon=item.defaultTexture
 	panel.text=item.name
 	acts = item.get_actions(actions)
-	print('l')
+	print("PROPAGATION OF ITEMS")
 	panel.get_popup().index_pressed.connect(func(index:int):
 		print(index)
 		item.tryAction(acts[index],self)
@@ -182,16 +188,21 @@ func propagateMenuButtonViaItem(panel: MenuButton, item: GameItem,user:Dictionar
 	return panel
 func canFitInInventory(item:GameItem):
 	pass
-func getCrafting():
+func getUse(hand:GameItem,target:Node2D):
 	pass
 func resippyBS():
-	var v = Recipe.new()
-	#spear
-	#string
-	#rope
-	#tinder
-	#pot
-	#crucible
+	var v = Recipe.new() 
 	v.catalysts.append("bow")
-	v.consumed.append(["stick","log","wood"])
+	v.consumed.append(["stick","wooden_rod"],"string")
+	v.output
 	recipes.append(v)
+	v = Recipe.new() 
+	v.catalysts.append("bow")
+	v.consumed.append(["stick","wooden_rod"],"string")
+	v.output
+	recipes.append(v)
+func dig():
+	print("diggin")
+	pass
+func use(thing):
+	equipment.get(activeHand,)

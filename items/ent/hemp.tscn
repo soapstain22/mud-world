@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bhsq011em46pm"]
 
-[ext_resource type="Script" path="res://Foliage.gd" id="1_v8vcv"]
+[ext_resource type="Script" path="res://items/Foliage.gd" id="1_v8vcv"]
 [ext_resource type="Texture2D" uid="uid://dpsaxd4wknirp" path="res://items/hardcode/hemp.png" id="2_e3ide"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8ypew"]
@@ -9,12 +9,11 @@ radius = 6.32456
 [node name="Hemp" type="Node2D"]
 script = ExtResource("1_v8vcv")
 preferredTemp = 0.01
-preferredHumidity = 0.01
+preferredHumidity = -0.04
 preferredErosion = 0.01
-preferredSand = 0.01
+preferredSand = -0.01
 preferredClay = 0.01
-preferredSilt = 0.01
-pickiness = 5.0
+preferredSilt = -0.01
 tooltip = "hemp"
 itemName = "hemp"
 defaultTexture = ExtResource("2_e3ide")

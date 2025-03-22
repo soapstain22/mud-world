@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://cvjb1vwl3bg1l"]
 
-[ext_resource type="Script" path="res://Foliage.gd" id="1_s72h1"]
+[ext_resource type="Script" path="res://items/Foliage.gd" id="1_s72h1"]
 [ext_resource type="Texture2D" uid="uid://l0vp1gogsho4" path="res://items/hardcode/bamboo.png" id="2_fea1d"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8ypew"]
@@ -8,8 +8,8 @@ radius = 6.32456
 
 [node name="Bamboo" type="Node2D"]
 script = ExtResource("1_s72h1")
+preferredTemp = 0.1
 preferredClay = 0.1
-pickiness = 10.0
 tooltip = "bambooooo"
 itemName = "bamboo"
 defaultTexture = ExtResource("2_fea1d")

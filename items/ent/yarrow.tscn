@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bk70451jrat0q"]
 
-[ext_resource type="Script" path="res://Foliage.gd" id="1_bl3jw"]
+[ext_resource type="Script" path="res://items/Foliage.gd" id="1_bl3jw"]
 [ext_resource type="Texture2D" uid="uid://dgmiwjje8e15d" path="res://items/hardcode/yarrow.png" id="2_2mpjn"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8ypew"]

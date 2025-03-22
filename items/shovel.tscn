@@ -1,19 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://u74rjyriy0c8"]
+[gd_scene load_steps=4 format=3 uid="uid://dyqgghrp0y4p"]
 
-[ext_resource type="Script" path="res://items/Foliage.gd" id="1_64p0l"]
-[ext_resource type="Texture2D" uid="uid://dpsaxd4wknirp" path="res://items/hardcode/hemp.png" id="2_jlvbw"]
+[ext_resource type="Script" path="res://items/stick.gd" id="1_06jjt"]
+[ext_resource type="Texture2D" uid="uid://cdljshh4tbg83" path="res://spr/long_stick.png" id="2_ctfea"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8ypew"]
 
-[node name="Grass" type="Node2D"]
-script = ExtResource("1_64p0l")
-pickiness = 0.34
-itemName = "Grass"
+[node name="GameItem" type="Node2D"]
+script = ExtResource("1_06jjt")
 
 [node name="face" type="Sprite2D" parent="."]
 texture_filter = 1
 texture_repeat = 1
-texture = ExtResource("2_jlvbw")
+texture = ExtResource("2_ctfea")
 
 [node name="RigidBody2D" type="RigidBody2D" parent="."]
 collision_layer = 2

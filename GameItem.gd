@@ -9,10 +9,10 @@ class_name GameItem
 @export var equipSprite:Texture2D
 @export var clickCatch:Callable
 @export var clickThrow:Callable
+var toolBehavior
 var mat
 var contained =false
 var inhand =false
-
 func get_actions(actions:Dictionary):
 	var returns= []
 	var skills = actions.get("skills")
@@ -25,17 +25,13 @@ func get_actions(actions:Dictionary):
 				if contained:
 					if inhand:
 						returns.append("store")
+						returns.append("use")
 					else:
 						returns.append("hold")
-
 				else:
 					returns.append("pick up")
 			if tags.has("harvestable"):
 				returns.append("harvest")
-			if tags.has("diggable"):
-				returns.append("dig")
-			if tags.has("edible"):
-				returns.append("eat")
 		if tags.has("container"):
 			returns.append("open")
 		if ["helm","back","shirt","pants","shoes","hand","coat","mask","socks","underwear"] in tags:
@@ -50,5 +46,13 @@ func get_actions(actions:Dictionary):
 	return returns
 func tryAction(action,user):
 	user.call(action.replace(" ",""),self)
+func tryActionOn(action,user,target):
+	call(target.replace(" ",""),self)
 func eat(item:GameItem):
+	pass
+func use():
+	print("nothing ever happens")
+	
+	pass
+func use_on(user, target):
 	pass
