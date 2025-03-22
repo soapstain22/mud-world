@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name Player
 @export var speed = 1000
 @export var rotation_speed = 1.5
 @export var equipment:Dictionary
@@ -21,6 +22,7 @@ var leftHandSlot:MenuButton
 var RightHandSlot:MenuButton
 var chat
 var invShow:VBoxContainer
+var click:Callable
 @export var recipes:Array
 var validEquipSlots=["helm","back","shirt","socks","pants","shoes","mask","coat","hands","underwear"]
 func get_input():
@@ -46,6 +48,7 @@ func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shap
 	if (body.get_parent() is GameItem):
 		if(!nearby.get(body.get_parent())):
 			lister.get_parent()
+			
 			var c:TreeItem = lister.create_item(null,-1)
 			c.set_text(0,body.get_parent().itemName)
 			c.add_button(0,Texture2D.new())
@@ -57,8 +60,9 @@ func _on_area_2d_body_shape_entered(body_rid, body, body_shape_index, local_shap
 				tree2item.get_or_add(j,body.get_parent())
 			nearby.get_or_add(body.get_parent(),c)
 	pass # Replace with function body.
-
-
+func update_tree():
+	
+	pass
 func _on_area_2d_body_shape_exited(body_rid, body, body_shape_index, local_shape_index):
 	if (body.get_parent() is GameItem):
 		nearby.get(body.get_parent()).free()
@@ -89,9 +93,12 @@ func pickup(item:GameItem):
 		item.contained=true
 		item.inhand=true
 		if !inventory.has(item):
+			print("fart")
 			inventory.append(item)
 		if item.toolBehavior !=null:
+			print("fart")
 			for i in item.toolBehavior:
+				update_tree()
 				actions.get_or_add(i)
 		clearMenuButtonViaItem(item)
 		propagateMenuButtonViaItem($"../../hud/Control/equipment".find_child(activeHand).get_child(0),item,actions)
@@ -99,9 +106,12 @@ func pickup(item:GameItem):
 		print("tried pickup with full hand")
 
 	#update_equipment()
-func drop():
+func drop(it):
+	
 	var v = equipment.get(activeHand) as GameItem
 	if v !=null:
+		v.on_drop()
+		v.position = position
 		v.reparent($"../..")
 		v.contained=false
 		v.inhand=false
@@ -111,6 +121,8 @@ func drop():
 		inventory.erase(v)
 		equipment.erase(activeHand)
 		clearMenuButtonViaItem(v)
+		click = func():return false
+
 	pass
 
 func equip(item:GameItem):
@@ -132,6 +144,7 @@ func store(a):
 		clearMenuButtonViaItem(item)
 		invShow.add_child(propagateMenuButtonViaItem(MenuButton.new(),item,actions)) 
 		equipment.erase(activeHand)
+		click = func():return false
 	pass
 func hold(item:GameItem):
 	pickup(item)
@@ -143,8 +156,8 @@ func propagateInventory():
 	for i in inventory:
 		var a = MenuButton.new()
 		a=propagateMenuButtonViaItem(a,i,actions)
-		a.text = i.name
-		#a.icon = i.default_texture
+		a.text = i.item_name
+		a.icon = i.default_texture
 		$"../../hud/Control/Equip/ScrollContainer/Inventor".add_child(a)
 	pass
 func examine(item:GameItem):
@@ -175,16 +188,21 @@ func propagateMenuButtonViaItem(panel: MenuButton, item: GameItem,user:Dictionar
 	var c = 0
 	var acts:Array
 	panel.icon=item.defaultTexture
-	panel.text=item.name
+	panel.text=item.itemName
 	acts = item.get_actions(actions)
 	print("PROPAGATION OF ITEMS")
+	var a = 0
 	panel.get_popup().index_pressed.connect(func(index:int):
 		print(index)
+		a+=0
 		item.tryAction(acts[index],self)
 		)
+	print(a,"fart")
 	for o in item.get_actions(actions):
+		c+=1
 		panel.get_popup().add_item(o)
 	#fixme inventory overstore or repeating action thing
+	print(c)
 	return panel
 func canFitInInventory(item:GameItem):
 	pass
@@ -197,8 +215,7 @@ func resippyBS():
 	v.output
 	recipes.append(v)
 	v = Recipe.new() 
-	v.catalysts.append("bow")
-	v.consumed.append(["stick","wooden_rod"],"string")
+	v.consumed.append(["clay","clay"],"string")
 	v.output
 	recipes.append(v)
 func dig():
@@ -206,3 +223,5 @@ func dig():
 	pass
 func use(thing):
 	equipment.get(activeHand,)
+func popupMenu(item:GameItem,actions):
+	pass
