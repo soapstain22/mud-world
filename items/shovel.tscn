@@ -7,6 +7,13 @@
 
 [node name="GameItem" type="Node2D"]
 script = ExtResource("1_06jjt")
+weight = null
+volume = null
+tags = null
+tooltip = null
+itemName = null
+clickCatch = null
+clickThrow = null
 
 [node name="face" type="Sprite2D" parent="."]
 texture_filter = 1

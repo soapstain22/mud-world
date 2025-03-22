@@ -1,7 +1,7 @@
 [gd_scene load_steps=78 format=4 uid="uid://cyf2m5wwd46n7"]
 
-[ext_resource type="Script" path="res://worldgen.gd" id="1_fv3e0"]
-[ext_resource type="Script" path="res://playa.gd" id="2_jucig"]
+[ext_resource type="Script" path="res://code/WorldGen.gd" id="1_fv3e0"]
+[ext_resource type="Script" path="res://code/Player.gd" id="2_jucig"]
 [ext_resource type="TileSet" uid="uid://c7srjvfqxhngg" path="res://floors.tres" id="3_2e4ck"]
 [ext_resource type="Texture2D" uid="uid://cj3g7m0cey5hv" path="res://pants.png" id="3_a3qqg"]
 [ext_resource type="Material" uid="uid://do28thfr3sypg" path="res://ignoreLight.tres" id="3_epb1w"]
@@ -820,18 +820,6 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 size_flags_stretch_ratio = 0.0
 
-[node name="listedThings" type="Tree" parent="hud/Control"]
-light_mask = 0
-material = ExtResource("3_epb1w")
-layout_mode = 2
-offset_left = 701.0
-offset_top = 161.0
-offset_right = 849.0
-offset_bottom = 272.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-allow_reselect = true
-
 [node name="Happenings" type="Panel" parent="hud/Control"]
 material = ExtResource("3_epb1w")
 use_parent_material = true
@@ -1151,7 +1139,3 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[connection signal="body_shape_entered" from="game/CharacterBody2D/Area2D" to="game/CharacterBody2D" method="_on_area_2d_body_shape_entered"]
-[connection signal="body_shape_exited" from="game/CharacterBody2D/Area2D" to="game/CharacterBody2D" method="_on_area_2d_body_shape_exited"]
-[connection signal="item_activated" from="hud/Control/listedThings" to="game/CharacterBody2D" method="_on_listed_things_item_activated"]

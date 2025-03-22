@@ -1,6 +1,6 @@
-[gd_scene load_steps=4 format=3 uid="uid://djeogsxksy53t"]
+[gd_scene load_steps=4 format=3 uid="uid://boqq7dwiy80aj"]
 
-[ext_resource type="Script" path="res://GameItem.gd" id="1_53u3f"]
+[ext_resource type="Script" path="res://code/GameItem.gd" id="1_53u3f"]
 [ext_resource type="Texture2D" uid="uid://ci571kfomng4q" path="res://spr/stone_1.png" id="2_pvovt"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8ypew"]

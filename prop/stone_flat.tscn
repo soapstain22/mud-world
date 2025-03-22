@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://bci5mlh0mg1or"]
+[gd_scene load_steps=5 format=3 uid="uid://dm3wqk0lnxnqg"]
 
-[ext_resource type="Script" path="res://GameItem.gd" id="1_1dxew"]
+[ext_resource type="Script" path="res://code/GameItem.gd" id="1_1dxew"]
 [ext_resource type="Texture2D" uid="uid://ci571kfomng4q" path="res://spr/stone_1.png" id="2_xip6k"]
 [ext_resource type="Texture2D" uid="uid://cn1mq1lqkpy5v" path="res://spr/stone_2.png" id="3_gxj1e"]
 

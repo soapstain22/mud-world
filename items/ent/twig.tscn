@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://los43ehb2lvs"]
 
-[ext_resource type="Script" path="res://GameItem.gd" id="1_4hi4d"]
+[ext_resource type="Script" path="res://code/GameItem.gd" id="1_4hi4d"]
 [ext_resource type="Texture2D" uid="uid://bl3wifc17rafu" path="res://spr/grasses.png" id="2_fyhvq"]
 [ext_resource type="Texture2D" uid="uid://ci7b4bshlubxq" path="res://spr/twig.png" id="2_tgd0w"]
 

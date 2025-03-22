@@ -1,4 +1,4 @@
-extends "res://GameItem.gd"
+extends GameItem
 class_name Foliage
 @export var preferredTemp:float
 @export var preferredHumidity:float
